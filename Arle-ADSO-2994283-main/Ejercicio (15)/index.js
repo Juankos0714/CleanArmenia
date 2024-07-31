@@ -4,11 +4,13 @@ let obtenerCarta = function() {
 let puntuacionUsuario = obtenerCarta() + obtenerCarta();
 let puntuacionComputadora = obtenerCarta() + obtenerCarta();
 alert("Tus cartas iniciales suman: " + puntuacionUsuario);
-let terceraCarta = obtenerCarta();
-puntuacionUsuario += terceraCarta;
-let terceraCartaComputadora = obtenerCarta();
-puntuacionComputadora += terceraCartaComputadora;
-
+let pedirterceraCarta = prompt("¿Deseas otra carta? (A para sí, cualquier otra tecla para no)").toUpperCase();
+if (pedirterceraCarta === "A") {
+    let terceraCarta = obtenerCarta();
+    puntuacionUsuario += terceraCarta;
+    let terceraCartaComputadora = obtenerCarta();
+    puntuacionComputadora += terceraCartaComputadora;
+}
 let verCartas = prompt("¿Quieres ver las cartas? (A para sí, cualquier otra tecla para no)").toUpperCase();
 
 if (verCartas === "A") {
