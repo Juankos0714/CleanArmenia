@@ -1,9 +1,5 @@
-
-let numCopias = Number(prompt("Ingrese el número de copias que desea imprimir:"));
-
-let precioPorCopia;
-let precioTotal;
-
+function numeroCopias(numCopias, precioPorCopia, precioTotal){
+numCopias = Number(prompt("Ingrese el número de copias que desea imprimir:"));
 
 if (numCopias >= 0 && numCopias <= 499) {
     precioPorCopia = 120;
@@ -22,3 +18,5 @@ if (precioPorCopia) {
     
     alert("Precio por copia: $" + precioPorCopia + "\nPrecio total: $" + precioTotal);
 }
+}
+numeroCopias()
