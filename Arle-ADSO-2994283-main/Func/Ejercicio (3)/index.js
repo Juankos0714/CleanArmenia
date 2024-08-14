@@ -30,3 +30,32 @@ if (lavadorasPrestadas === 0) {
         }
     alert(`El valor total es ${valorTotal}`);
 }
+
+// EJERCICIO Funciones
+
+function TipoDeLvadora(){
+    let tipoLava = Number(prompt("¿Que tipo de lavadoras deseas alquilar? Ingrese   1) Grandes 2) Pequeñas"));
+    return tipoLava
+}
+
+const CantidadLav = Number(prompt("¿Cuantas lavadoras deseas alquilar?"));
+
+function CostoPorHora(){
+    let Horas = Number(prompt("¿Cuantas horas a desea alquilar?"));
+    LavadoraGrade = 4000
+    lavadoraPequeña = 3000
+    return tipoLava * Horas
+}
+CostoPorHora()
+function Descuento(){
+    if(CantidadLav > 3){
+        let descuento = CostoPorHora * 0.03;
+        return costototal = CostoPorHora -= descuento;
+    }else{
+         return CostoPorHora
+    }
+}
+function Principal(){
+    alert(`Su tipo de lavadora es ${TipoDeLvadora} La cantidad que vas a alquilar es ${CantidadLav} y su costo total va a ser de ${Descuento}`)
+}
+Principal()
