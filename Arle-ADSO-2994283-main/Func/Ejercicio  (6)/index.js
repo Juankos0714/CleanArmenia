@@ -1,6 +1,7 @@
-let numero1 = Number(prompt("Ingrese un numero  aleatorio"))
-let numero2 = Number(prompt("Ingrese un numero  aleatorio"))
-let numero3 = Number(prompt("Ingrese un numero  aleatorio"))
+function mayorQue(){ 
+ numero1 = Number(prompt("Ingrese un numero  aleatorio"))
+ numero2 = Number(prompt("Ingrese un numero  aleatorio"))
+ numero3 = Number(prompt("Ingrese un numero  aleatorio"))
 
 if(numero1 > numero2 && numero1  > numero3){
     alert(`El numero mayor es el ${numero1}`)
@@ -9,3 +10,5 @@ if(numero1 > numero2 && numero1  > numero3){
 }else{
     alert(`El numero mayor es el ${numero3}`)
 }
+}
+mayorQue()
