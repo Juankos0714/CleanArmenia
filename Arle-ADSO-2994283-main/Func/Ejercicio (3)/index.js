@@ -31,7 +31,6 @@ if (lavadorasPrestadas === 0) {
     alert(`El valor total es ${valorTotal}`);
 }
 
-// Segunda parte: Funciones para el sistema de alquiler
 
 function tipoDeLavadora() {
     return Number(prompt("¿Qué tipo de lavadoras deseas alquilar? Ingrese 1) Grandes 2) Pequeñas"));
