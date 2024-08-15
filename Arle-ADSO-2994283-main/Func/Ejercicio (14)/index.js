@@ -1,51 +1,48 @@
-let tamanio = prompt("Ingrese el tamaño del sándwich (pequeño o grande):").toLowerCase();
-let precioTotal;
-if (tamanio === "pequeño") {
-    precioTotal = 6000;
-} else if (tamanio === "grande") {
-    precioTotal = 12000;
-} else {
-    alert("Tamaño no válido. Por favor, elija pequeño o grande.");
+function obtenerTamanioSandwich() {
+    let tamanio = prompt("Ingrese el tamaño del sándwich (pequeño o grande):").toLowerCase();
+    while (tamanio !== "pequeño" && tamanio !== "grande") {
+        alert("Tamaño no válido. Por favor, elija pequeño o grande.");
+        tamanio = prompt("Ingrese el tamaño del sándwich (pequeño o grande):").toLowerCase();
+    }
+    return tamanio;
 }
 
-let tieneTocineta = false;
-let tieneJalapeno = false;
-let tienePavo = false;
-let tieneQueso = false;
+function obtenerPrecioBase(tamanio) {
+    return tamanio === "pequeño" ? 6000 : 12000;
+}
 
-if (precioTotal) {
-    let respuesta = prompt("¿Desea agregar tocineta? (si/no)").toLowerCase();
-    if (respuesta === "si") {
-        precioTotal += 3000;
-        tieneTocineta = true;
-    }
+function preguntarPorAdicional(nombreAdicional) {
+    return prompt(`¿Desea agregar ${nombreAdicional}? (si/no)`).toLowerCase() === "si";
+}
 
-    respuesta = prompt("¿Desea agregar jalapeño? (si/no)").toLowerCase();
-    if (respuesta === "si") {
-        tieneJalapeno = true;
-    }
+function calcularPrecioTotal(tamanio, adicionales) {
+    let precioTotal = obtenerPrecioBase(tamanio);
+    if (adicionales.tieneTocineta) precioTotal += 3000;
+    if (adicionales.tienePavo) precioTotal += 3000;
+    if (adicionales.tieneQueso) precioTotal += 2500;
+    return precioTotal;
+}
 
-    respuesta = prompt("¿Desea agregar pavo? (si/no)").toLowerCase();
-    if (respuesta === "si") {
-        precioTotal += 3000;
-        tienePavo = true;
-    }
+function generarResumen(tamanio, adicionales, precioTotal) {
+    let resumen = `Resumen del pedido:\nTamaño: ${tamanio} - $${obtenerPrecioBase(tamanio)}\n`;
+    if (adicionales.tieneTocineta) resumen += "Tocineta - $3000\n";
+    if (adicionales.tieneJalapeno) resumen += "Jalapeño - Gratis\n";
+    if (adicionales.tienePavo) resumen += "Pavo - $3000\n";
+    if (adicionales.tieneQueso) resumen += "Queso - $2500\n";
+    resumen += `Total a pagar: $${precioTotal}`;
+    return resumen;
+}
 
-    respuesta = prompt("¿Desea agregar queso? (si/no)").toLowerCase();
-    if (respuesta === "si") {
-        precioTotal += 2500;
-        tieneQueso = true;
-    }
-
-    let resumen = "Resumen del pedido:\n" +
-                  "Tamaño: " + tamanio + " - $" + (tamanio === "pequeño" ? "6000" : "12000") + "\n";
-    
-    if (tieneTocineta) resumen += "Tocineta - $3000\n";
-    if (tieneJalapeno) resumen += "Jalapeño - Gratis\n";
-    if (tienePavo) resumen += "Pavo - $3000\n";
-    if (tieneQueso) resumen += "Queso - $2500\n";
-    
-    resumen += "Total a pagar: $" + precioTotal;
-    
+function tomarPedido() {
+    const tamanio = obtenerTamanioSandwich();
+    const adicionales = {
+        tieneTocineta: preguntarPorAdicional("tocineta"),
+        tieneJalapeno: preguntarPorAdicional("jalapeño"),
+        tienePavo: preguntarPorAdicional("pavo"),
+        tieneQueso: preguntarPorAdicional("queso")
+    };
+    const precioTotal = calcularPrecioTotal(tamanio, adicionales);
+    const resumen = generarResumen(tamanio, adicionales, precioTotal);
     alert(resumen);
 }
+tomarPedido()
