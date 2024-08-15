@@ -27,35 +27,43 @@ if (lavadorasPrestadas === 0) {
     if (lavadorasPrestadas > 3) {
         let descuento = valorTotal * 0.03;
         valorTotal -= descuento;
-        }
+    }
     alert(`El valor total es ${valorTotal}`);
 }
 
-// EJERCICIO Funciones
+// Segunda parte: Funciones para el sistema de alquiler
 
-function TipoDeLvadora(){
-    let tipoLava = Number(prompt("¿Que tipo de lavadoras deseas alquilar? Ingrese   1) Grandes 2) Pequeñas"));
-    return tipoLava
+function tipoDeLavadora() {
+    return Number(prompt("¿Qué tipo de lavadoras deseas alquilar? Ingrese 1) Grandes 2) Pequeñas"));
 }
 
-const CantidadLav = Number(prompt("¿Cuantas lavadoras deseas alquilar?"));
-
-function CostoPorHora(){
-    let Horas = Number(prompt("¿Cuantas horas a desea alquilar?"));
-    LavadoraGrade = 4000
-    lavadoraPequeña = 3000
-    return tipoLava * Horas
+function cantidadLavadoras() {
+    return Number(prompt("¿Cuántas lavadoras deseas alquilar?"));
 }
-CostoPorHora()
-function Descuento(){
-    if(CantidadLav > 3){
-        let descuento = CostoPorHora * 0.03;
-        return costototal = CostoPorHora -= descuento;
-    }else{
-         return CostoPorHora
+
+function costoPorHora(tipo, cantidad, horas) {
+    let costoUnitario = tipo === 1 ? 4000 : 3000;
+    return cantidad * costoUnitario * horas;
+}
+
+function aplicarDescuento(costo, cantidad) {
+    if (cantidad > 3) {
+        let descuento = costo * 0.03;
+        return costo - descuento;
     }
+    return costo;
 }
-function Principal(){
-    alert(`Su tipo de lavadora es ${TipoDeLvadora} La cantidad que vas a alquilar es ${CantidadLav} y su costo total va a ser de ${Descuento}`)
+
+function principal() {
+    let tipo = tipoDeLavadora();
+    let cantidad = cantidadLavadoras();
+    let horas = Number(prompt("¿Cuántas horas desea alquilar?"));
+    
+    let costoTotal = costoPorHora(tipo, cantidad, horas);
+    costoTotal = aplicarDescuento(costoTotal, cantidad);
+    
+    alert(`Su tipo de lavadora es ${tipo === 1 ? 'Grande' : 'Pequeña'}. 
+La cantidad que va a alquilar es ${cantidad} y su costo total va a ser de ${costoTotal}`);
 }
-Principal()
+
+principal(); 
