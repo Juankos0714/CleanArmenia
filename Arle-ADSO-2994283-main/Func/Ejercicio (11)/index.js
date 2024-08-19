@@ -1,8 +1,10 @@
-let emitePitido = prompt("¿La computadora emite un pitido al iniciarse? (si/no)").toLowerCase();
+function diagnostico() {
+    let emitePitido = prompt("¿La computadora emite un pitido al iniciarse? (si/no)").toLowerCase();
 let discoGira = prompt("¿El disco duro gira? (si/no)").toLowerCase();
+}
 
-
-let mensaje;
+function mostrarDiagnostico() {
+    let mensaje;
 
 if (emitePitido === "si") {
     if (discoGira === "si") {
@@ -19,3 +21,9 @@ if (emitePitido === "si") {
 }
 
 alert("Diagnóstico: " + mensaje);
+}
+function emepzarDiagnostico(){
+    diagnostico();
+    mostrarDiagnostico();
+}
+emepzarDiagnostico()
