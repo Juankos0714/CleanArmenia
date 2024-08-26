@@ -158,33 +158,21 @@ function ingresarOpcion(id) {
 }
 
 function main() {
-    let idIngresado;
+    let idIngresado, nroCuentaIngresado;
     let usuarioValido = false;
 
     while (!usuarioValido) {
         idIngresado = Number(prompt("Ingresa tu documento de identificación"));
-        let usuario = usuarios.find(u => u.id === idIngresado);
+        nroCuentaIngresado = Number(prompt("Ingresa tu número de cuenta"));
+        
+        let usuario = usuarios.find(u => u.id === idIngresado && u.numero_cuenta === nroCuentaIngresado);
         
         if (usuario) {
             usuarioValido = true;
         } else {
-            alert("ID no encontrado. Por favor, intente nuevamente.");
+            alert("ID o número de cuenta no encontrado. Por favor, intente nuevamente.");
         }
     }
-    let nroCuentaIngresado;
-    let cuentaValida = false;
-    while (!cuentaValida) {
-        nroCuentaIngresado = Number(prompt("Ingrese el numero de cuenta que desea utilizar"));
-        let usuario = usuarios.find(u => u.numero_cuenta === nroCuentaIngresado);
-        
-        if (usuario) {
-            cuentaValida = true;
-        } else {
-            alert("Numero de cuenta no encontrado. Por favor, intente nuevamente.");
-        }
-    }
-
-
     let pinIngresado = prompt("Ingresa tu PIN");
 
     if (validarIdentificacion(idIngresado, pinIngresado)) {
