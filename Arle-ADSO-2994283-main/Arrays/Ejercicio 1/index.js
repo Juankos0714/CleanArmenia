@@ -100,7 +100,7 @@ function depositar(){
 function ingresarOpcion(id) {
     let check = false;
     while (!check) {
-        let opcion = prompt("Bienvenido, seleccione:\n1. Consultar saldo\n2. Retirar\n3. Transferir\n7. Salir");
+        let opcion = prompt("Bienvenido, seleccione:\n1. Consultar saldo\n2. Retirar\n3. Transferir\n4. Depositar\n5. Salir");
         switch (opcion) {
             case "1":
                 let usuario = validation(id);
@@ -112,7 +112,10 @@ function ingresarOpcion(id) {
             case "3":
                 transferencia(id);
                 break;
-            case "7":
+            case "4":
+                depositar(id);
+                break;                
+            case "5":
                 check = true;
                 break;
             default:
