@@ -1,7 +1,8 @@
 let usuarios = [
-    {id: 1010059006, pin: "1234", saldo: 3000000},
-    {id: 1094940970, pin: "1108", saldo: 1000000},
-    {id: 38879991, pin: "0810", saldo: 50000}
+    {id: 1010059006, pin: "1234", saldo: 3000000, numero_cuenta: 388730124 },
+    {id: 1010059006, pin: "1234", saldo: 100000, numero_cuenta: 388730122 },
+    {id: 1094940970, pin: "1108", saldo: 1000000, numero_cuenta: 388730123},
+    {id: 38879991, pin: "0810", saldo: 50000, numero_cuenta: 388730121}
 ];
 
 function validation(id) {
@@ -71,6 +72,24 @@ function transferencia(id) {
     let usuarioReceptor = validation(idReceptor);
     if (!usuarioReceptor) return;
 
+    let monto = Number(prompt("Ingrese el valor a transferir"));
+    if (isNaN(monto) || monto <= 0) {
+        alert("Por favor, ingrese un monto válido.");
+        return;
+    }
+
+    if (usuario.saldo >= monto) {
+        usuario.saldo -= monto;
+        usuarioReceptor.saldo += monto;
+        alert(`Transferencia de $${monto} desde ID ${usuario.id} a ID ${usuarioReceptor.id} exitosa.`);
+    } else {
+        alert("Fondos insuficientes para realizar la transferencia.");
+    }
+}
+
+function intertransferencia(id) {
+    let usuario = validation(id);
+    if (!usuario) return;
     let monto = Number(prompt("Ingrese el valor a transferir"));
     if (isNaN(monto) || monto <= 0) {
         alert("Por favor, ingrese un monto válido.");
