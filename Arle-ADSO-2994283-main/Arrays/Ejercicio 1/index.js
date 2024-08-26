@@ -1,20 +1,27 @@
 let usuarios = [
-    {id: 1010059006, pin: "1234", saldo: 3000000, numero_cuenta: 388730124 },
-    {id: 1010059006, pin: "1234", saldo: 100000, numero_cuenta: 388730122 },
-    {id: 1094940970, pin: "1108", saldo: 1000000, numero_cuenta: 388730123},
-    {id: 38879991, pin: "0810", saldo: 50000, numero_cuenta: 388730121}
+    {id: 1010059006, pin: "1234", saldo: 3000000, numero_cuenta: 1 },
+    {id: 1010059006, pin: "1234", saldo: 100000, numero_cuenta: 2 },
+    {id: 1094940970, pin: "1108", saldo: 1000000, numero_cuenta: 1},
+    {id: 38879991, pin: "0810", saldo: 50000, numero_cuenta: 1}
 ];
 
 function validation(id) {
-    let usuario = usuarios.find(u => u.id === id);
-    if (!usuario) {
+    let user = usuarios.find(u => u.id === id);
+    if (!user) {
         alert("Usuario no encontrado");
         return null;
+    }
+    return user;
+    let usuario = usuarios.find(u => u.numero_cuenta === numero_cuenta);
+
+    if (!usuario) {
+        alert("Usuario no encontrado. Por favor, verifique su ID.");
+        return false;
     }
     return usuario;
 }
 
-function validarIdentificacion(idIngresado, pinIngresado) {
+function validarIdentificacion(idIngresado, pinIngresado, nroCuentaIngresado) {
     let intentos = 3;
     let usuarioEncontrado = usuarios.find(usuario => usuario.id === idIngresado);
 
@@ -22,9 +29,14 @@ function validarIdentificacion(idIngresado, pinIngresado) {
         alert("Usuario no encontrado. Por favor, verifique su ID.");
         return false;
     }
+    let usuarioEncontrado2 = usuarios.find(usuario => usuario.numero_cuenta === nroCuentaIngresado);
 
+    if (!usuarioEncontrado2) {
+        alert("Usuario no encontrado. Por favor, verifique su ID.");
+        return false;
+    }
     while (intentos > 0) {
-        if (usuarioEncontrado.pin === pinIngresado) {
+        if (usuarioEncontrado2.pin === pinIngresado) {
             alert("Ingreso exitoso");
             return true;
         } else {
@@ -87,7 +99,7 @@ function transferencia(id) {
     }
 }
 
-function intertransferencia(id) {
+function intertransferencia(id, numero_cuenta) {
     let usuario = validation(id);
     if (!usuario) return;
     let monto = Number(prompt("Ingrese el valor a transferir"));
@@ -98,7 +110,7 @@ function intertransferencia(id) {
 
     if (usuario.saldo >= monto) {
         usuario.saldo -= monto;
-        usuarioReceptor.saldo += monto;
+        usuario.saldo += monto;
         alert(`Transferencia de $${monto} desde ID ${usuario.id} a ID ${usuarioReceptor.id} exitosa.`);
     } else {
         alert("Fondos insuficientes para realizar la transferencia.");
@@ -159,6 +171,19 @@ function main() {
             alert("ID no encontrado. Por favor, intente nuevamente.");
         }
     }
+    let nroCuentaIngresado;
+    let cuentaValida = false;
+    while (!cuentaValida) {
+        nroCuentaIngresado = Number(prompt("Ingrese el numero de cuenta que desea utilizar"));
+        let usuario = usuarios.find(u => u.numero_cuenta === nroCuentaIngresado);
+        
+        if (usuario) {
+            cuentaValida = true;
+        } else {
+            alert("Numero de cuenta no encontrado. Por favor, intente nuevamente.");
+        }
+    }
+
 
     let pinIngresado = prompt("Ingresa tu PIN");
 
@@ -171,3 +196,4 @@ function main() {
 }
 
 main();
+
