@@ -18,7 +18,7 @@ function validarIdentificacion(idIngresado, pinIngresado) {
     let usuarioEncontrado = usuarios.find(usuario => usuario.id === idIngresado);
 
     if (!usuarioEncontrado) {
-        alert("Usuario no encontrado");
+        alert("Usuario no encontrado. Por favor, verifique su ID.");
         return false;
     }
 
@@ -85,18 +85,20 @@ function transferencia(id) {
         alert("Fondos insuficientes para realizar la transferencia.");
     }
 }
-function depositar(){
+
+function depositar(id){
     let usuario = validation(id);
     if (!usuario) return;
     
-    let deposito = Number(prompt(`Ingrese  el valor  a de positar ya sea  en cheque o en efectivo`))
-    if (isNaN(monto) || monto <= 0) {
+    let deposito = Number(prompt(`Ingrese el valor a depositar ya sea en cheque o en efectivo`))
+    if (isNaN(deposito) || deposito <= 0) {
         alert("Por favor, ingrese un monto válido.");
         return;
     }
     usuario.saldo += deposito;
-    alert(`Su deposito a ID ${usuario.id} de ${deposito} se ha completaado con  exito`)    
+    alert(`Su depósito a ID ${usuario.id} de ${deposito} se ha completado con éxito`)    
 }
+
 function ingresarOpcion(id) {
     let check = false;
     while (!check) {
@@ -125,7 +127,20 @@ function ingresarOpcion(id) {
 }
 
 function main() {
-    let idIngresado = Number(prompt("Ingresa tu documento de identificación"));
+    let idIngresado;
+    let usuarioValido = false;
+
+    while (!usuarioValido) {
+        idIngresado = Number(prompt("Ingresa tu documento de identificación"));
+        let usuario = usuarios.find(u => u.id === idIngresado);
+        
+        if (usuario) {
+            usuarioValido = true;
+        } else {
+            alert("ID no encontrado. Por favor, intente nuevamente.");
+        }
+    }
+
     let pinIngresado = prompt("Ingresa tu PIN");
 
     if (validarIdentificacion(idIngresado, pinIngresado)) {
