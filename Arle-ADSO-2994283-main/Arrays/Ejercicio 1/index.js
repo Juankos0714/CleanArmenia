@@ -5,32 +5,26 @@ let usuarios = [
     {id: 38879991, pin: "0810", saldo: 50000, numero_cuenta: 1}
 ];
 
-function validation(id) {
+function validation(id, numero_cuenta) {
     let usuario = usuarios.find(u => u.id === id && u.numero_cuenta === numero_cuenta);
     if (!usuario) {
         alert("Usuario no encontrado");
         return null;
     }
     return usuario;
-
 }
 
 function validarIdentificacion(idIngresado, pinIngresado, nroCuentaIngresado) {
     let intentos = 3;
-    let usuarioEncontrado = usuarios.find(usuario => usuario.id === idIngresado);
+    let usuarioEncontrado = usuarios.find(usuario => usuario.id === idIngresado && usuario.numero_cuenta === nroCuentaIngresado);
 
     if (!usuarioEncontrado) {
-        alert("Usuario no encontrado. Por favor, verifique su ID.");
+        alert("Usuario no encontrado. Por favor, verifique su ID y número de cuenta.");
         return false;
     }
-    let usuarioEncontrado2 = usuarios.find(usuario => usuario.numero_cuenta === nroCuentaIngresado);
 
-    if (!usuarioEncontrado2) {
-        alert("Usuario no encontrado. Por favor, verifique su ID.");
-        return false;
-    }
     while (intentos > 0) {
-        if (usuarioEncontrado2.pin === pinIngresado) {
+        if (usuarioEncontrado.pin === pinIngresado) {
             alert("Ingreso exitoso");
             return true;
         } else {
@@ -47,8 +41,8 @@ function validarIdentificacion(idIngresado, pinIngresado, nroCuentaIngresado) {
     return false;
 }
 
-function retirar(id) {
-    let usuario = validation(id);
+function retirar(id, numero_cuenta) {
+    let usuario = validation(id, numero_cuenta);
     if (!usuario) return;
 
     let retiro = Number(prompt("Ingrese el valor a retirar"));
@@ -70,12 +64,13 @@ function retirar(id) {
     }
 }
 
-function transferencia(id) {
-    let usuario = validation(id);
+function transferencia(id, numero_cuenta) {
+    let usuario = validation(id, numero_cuenta);
     if (!usuario) return;
 
     let idReceptor = Number(prompt("Ingrese el documento de identificación del usuario al que desea transferir"));
-    let usuarioReceptor = validation(idReceptor);
+    let nroCuentaReceptor = Number(prompt("Ingrese el número de cuenta del usuario al que desea transferir"));
+    let usuarioReceptor = validation(idReceptor, nroCuentaReceptor);
     if (!usuarioReceptor) return;
 
     let monto = Number(prompt("Ingrese el valor a transferir"));
@@ -96,8 +91,14 @@ function transferencia(id) {
 function intertransferencia(id, numero_cuenta) {
     let usuario = validation(id, numero_cuenta);
     if (!usuario) return;
-    let numero_cuenta = Number(prompt(`Ingrese el numero de cuenta al que desea transferir`))
-    let cuentaReceptora = validation(numero_cuenta)
+
+    let nroCuentaReceptora = Number(prompt(`Ingrese el numero de cuenta al que desea transferir`));
+    let cuentaReceptora = usuarios.find(u => u.id === usuario.id && u.numero_cuenta === nroCuentaReceptora);
+    if (!cuentaReceptora) {
+        alert("Cuenta receptora no encontrada");
+        return;
+    }
+
     let monto = Number(prompt("Ingrese el valor a transferir"));
     if (isNaN(monto) || monto <= 0) {
         alert("Por favor, ingrese un monto válido.");
@@ -107,14 +108,14 @@ function intertransferencia(id, numero_cuenta) {
     if (usuario.saldo >= monto) {
         usuario.saldo -= monto;
         cuentaReceptora.saldo += monto;
-        alert(`Transferencia de $${monto} desde ID ${usuario.id} a ID ${cuentaReceptora.id} exitosa.`);
+        alert(`Transferencia de $${monto} desde cuenta ${usuario.numero_cuenta} a cuenta ${cuentaReceptora.numero_cuenta} exitosa.`);
     } else {
         alert("Fondos insuficientes para realizar la transferencia.");
     }
 }
 
-function depositar(id){
-    let usuario = validation(id);
+function depositar(id, numero_cuenta){
+    let usuario = validation(id, numero_cuenta);
     if (!usuario) return;
     
     let deposito = Number(prompt(`Ingrese el valor a depositar ya sea en cheque o en efectivo`))
@@ -123,28 +124,31 @@ function depositar(id){
         return;
     }
     usuario.saldo += deposito;
-    alert(`Su depósito a ID ${usuario.id} de ${deposito} se ha completado con éxito`)    
+    alert(`Su depósito a la cuenta ${usuario.numero_cuenta} de ${deposito} se ha completado con éxito`)    
 }
 
-function ingresarOpcion(id) {
+function ingresarOpcion(id, numero_cuenta) {
     let check = false;
     while (!check) {
-        let opcion = prompt("Bienvenido, seleccione:\n1. Consultar saldo\n2. Retirar\n3. Transferir\n4. Depositar\n5. Salir");
+        let opcion = prompt("Bienvenido, seleccione:\n1. Consultar saldo\n2. Retirar\n3. Transferir\n4. Depositar\n5. Intertransferencia\n6. Salir");
         switch (opcion) {
             case "1":
-                let usuario = validation(id);
+                let usuario = validation(id, numero_cuenta);
                 if (usuario) alert(`Su saldo es $${usuario.saldo}`);
                 break;
             case "2":
-                retirar(id);
+                retirar(id, numero_cuenta);
                 break;
             case "3":
-                transferencia(id);
+                transferencia(id, numero_cuenta);
                 break;
             case "4":
-                depositar(id);
-                break;                
+                depositar(id, numero_cuenta);
+                break;
             case "5":
+                intertransferencia(id, numero_cuenta);
+                break;
+            case "6":
                 check = true;
                 break;
             default:
@@ -169,11 +173,12 @@ function main() {
             alert("ID o número de cuenta no encontrado. Por favor, intente nuevamente.");
         }
     }
+
     let pinIngresado = prompt("Ingresa tu PIN");
 
-    if (validarIdentificacion(idIngresado, pinIngresado)) {
+    if (validarIdentificacion(idIngresado, pinIngresado, nroCuentaIngresado)) {
         alert("Bienvenido al sistema");
-        ingresarOpcion(idIngresado);
+        ingresarOpcion(idIngresado, nroCuentaIngresado);
     } else {
         alert("No se pudo validar su identidad. Por favor, inténtelo más tarde.");
     }
