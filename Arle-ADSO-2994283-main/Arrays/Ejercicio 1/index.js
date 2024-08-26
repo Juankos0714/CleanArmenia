@@ -6,19 +6,13 @@ let usuarios = [
 ];
 
 function validation(id) {
-    let user = usuarios.find(u => u.id === id);
-    if (!user) {
+    let usuario = usuarios.find(u => u.id === id && u.numero_cuenta === numero_cuenta);
+    if (!usuario) {
         alert("Usuario no encontrado");
         return null;
     }
-    return user;
-    let usuario = usuarios.find(u => u.numero_cuenta === numero_cuenta);
-
-    if (!usuario) {
-        alert("Usuario no encontrado. Por favor, verifique su ID.");
-        return false;
-    }
     return usuario;
+
 }
 
 function validarIdentificacion(idIngresado, pinIngresado, nroCuentaIngresado) {
@@ -100,8 +94,10 @@ function transferencia(id) {
 }
 
 function intertransferencia(id, numero_cuenta) {
-    let usuario = validation(id);
+    let usuario = validation(id, numero_cuenta);
     if (!usuario) return;
+    let numero_cuenta = Number(prompt(`Ingrese el numero de cuenta al que desea transferir`))
+    let cuentaReceptora = validation(numero_cuenta)
     let monto = Number(prompt("Ingrese el valor a transferir"));
     if (isNaN(monto) || monto <= 0) {
         alert("Por favor, ingrese un monto válido.");
@@ -110,8 +106,8 @@ function intertransferencia(id, numero_cuenta) {
 
     if (usuario.saldo >= monto) {
         usuario.saldo -= monto;
-        usuario.saldo += monto;
-        alert(`Transferencia de $${monto} desde ID ${usuario.id} a ID ${usuarioReceptor.id} exitosa.`);
+        cuentaReceptora.saldo += monto;
+        alert(`Transferencia de $${monto} desde ID ${usuario.id} a ID ${cuentaReceptora.id} exitosa.`);
     } else {
         alert("Fondos insuficientes para realizar la transferencia.");
     }
@@ -184,4 +180,6 @@ function main() {
 }
 
 main();
+
+
 
