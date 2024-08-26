@@ -1,15 +1,15 @@
 // Definición de las habitaciones
 let habitaciones = [
-    { Numero_de_Habitacion: 101, tipo_habitacion: "individual", fumadores: false, reserva: false, capacidad: 2 },
-    { Numero_de_Habitacion: 102, tipo_habitacion: "doble", fumadores: true, reserva: false, capacidad: 4 },
-    { Numero_de_Habitacion: 103, tipo_habitacion: "familiar", fumadores: false, reserva: false, capacidad: 6 },
-    { Numero_de_Habitacion: 104, tipo_habitacion: "individual", fumadores: true, reserva: false, capacidad: 2 },
-    { Numero_de_Habitacion: 105, tipo_habitacion: "doble", fumadores: false, reserva: false, capacidad: 4 },
-    { Numero_de_Habitacion: 201, tipo_habitacion: "familiar", fumadores: true, reserva: false, capacidad: 6 },
-    { Numero_de_Habitacion: 202, tipo_habitacion: "individual", fumadores: false, reserva: false, capacidad: 2 },
-    { Numero_de_Habitacion: 203, tipo_habitacion: "doble", fumadores: true, reserva: false, capacidad: 4 },
-    { Numero_de_Habitacion: 204, tipo_habitacion: "familiar", fumadores: false, reserva: false, capacidad: 6 },
-    { Numero_de_Habitacion: 205, tipo_habitacion: "doble", fumadores: true, reserva: false, capacidad: 4 }
+    { Numero_de_Habitacion: 101, tipo_habitacion: "individual", reserva: false, capacidad: 2 },
+    { Numero_de_Habitacion: 102, tipo_habitacion: "doble", reserva: false, capacidad: 4 },
+    { Numero_de_Habitacion: 103, tipo_habitacion: "familiar", reserva: false, capacidad: 6 },
+    { Numero_de_Habitacion: 104, tipo_habitacion: "individual", reserva: false, capacidad: 2 },
+    { Numero_de_Habitacion: 105, tipo_habitacion: "doble", reserva: false, capacidad: 4 },
+    { Numero_de_Habitacion: 201, tipo_habitacion: "familiar", reserva: false, capacidad: 6 },
+    { Numero_de_Habitacion: 202, tipo_habitacion: "individual", reserva: false, capacidad: 2 },
+    { Numero_de_Habitacion: 203, tipo_habitacion: "doble", reserva: false, capacidad: 4 },
+    { Numero_de_Habitacion: 204, tipo_habitacion: "familiar", reserva: false, capacidad: 6 },
+    { Numero_de_Habitacion: 205, tipo_habitacion: "doble", reserva: false, capacidad: 4 }
 ];
 
 let reservas = [
@@ -36,7 +36,6 @@ function realizarReserva() {
 
     let habitacionDisponible = habitaciones.find(h => 
         h.tipo_habitacion === tipoHabitacion && 
-        h.fumadores === fumadores && 
         !h.reserva &&
         h.capacidad >= numPersonas &&
         (tipoHabitacion === "familiar" || !mascota)
