@@ -24,8 +24,8 @@ function realizarReserva() {
     let habitacionesDisponibles = habitaciones.filter(h => 
         !h.reserva &&
         h.capacidad >= numPersonas &&
-        (!fumadores || h.fumadores) && 
-        (!mascota || h.tipo_habitacion === "familiar")
+        (!fumadores || h.fumadores) && // Fumadores solo en habitaciones para fumadores
+        (!mascota || h.tipo_habitacion === "familiar") // Mascotas solo en habitaciones familiares
     );
 
     if (habitacionesDisponibles.length === 0) {
