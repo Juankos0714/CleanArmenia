@@ -1,6 +1,3 @@
-// Aplicación de Carrito de Compras
-
-// Clase para representar un producto
 class Producto {
     constructor(nombre, precio, stock) {
         this.nombre = nombre;
@@ -9,7 +6,6 @@ class Producto {
     }
 }
 
-// Clase para manejar el carrito de compras
 class CarritoCompras {
     constructor() {
         this.items = [];
@@ -53,7 +49,7 @@ class CarritoCompras {
     }
 }
 
-// Crear algunos productos de ejemplo
+
 const productos = [
     new Producto("Camiseta", 20, 50),
     new Producto("Pantalón", 40, 30),
@@ -61,10 +57,10 @@ const productos = [
     new Producto("Gorra", 15, 40)
 ];
 
-// Crear el carrito de compras
+
 const carrito = new CarritoCompras();
 
-// Función principal para interactuar con el usuario
+
 function main() {
     while (true) {
         const opcion = prompt(
@@ -127,9 +123,9 @@ function finalizarCompra() {
     const confirmar = confirm("¿Desea confirmar su compra?");
     if (confirmar) {
         alert(`Compra finalizada. Total pagado: $${carrito.calcularTotal().toFixed(2)}`);
-        carrito.items = []; // Vaciar el carrito
+        carrito.items = [];
     }
 }
 
-// Ejecutar el programa
+
 main();
