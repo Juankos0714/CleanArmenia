@@ -1,150 +1,87 @@
-let habitaciones = [
-    { Numero_de_Habitacion: 101, tipo_habitacion: "individual", reserva: false, capacidad: 2, fumadores: false },
-    { Numero_de_Habitacion: 102, tipo_habitacion: "doble", reserva: false, capacidad: 4, fumadores: true },
-    { Numero_de_Habitacion: 103, tipo_habitacion: "familiar", reserva: false, capacidad: 6, fumadores: false },
-    { Numero_de_Habitacion: 104, tipo_habitacion: "individual", reserva: false, capacidad: 2, fumadores: true },
-    { Numero_de_Habitacion: 105, tipo_habitacion: "doble", reserva: false, capacidad: 4, fumadores: false },
-    { Numero_de_Habitacion: 201, tipo_habitacion: "familiar", reserva: false, capacidad: 6, fumadores: true },
-    { Numero_de_Habitacion: 202, tipo_habitacion: "individual", reserva: false, capacidad: 2, fumadores: false },
-    { Numero_de_Habitacion: 203, tipo_habitacion: "doble", reserva: false, capacidad: 4, fumadores: true },
-    { Numero_de_Habitacion: 204, tipo_habitacion: "familiar", reserva: false, capacidad: 6, fumadores: false },
-    { Numero_de_Habitacion: 205, tipo_habitacion: "doble", reserva: false, capacidad: 4, fumadores: true }
-];
+// Array para almacenar las citas
+let citas = [];
 
-let reservas = [];
+// Función para programar una cita
+function programarCita() {
+    const nombrePaciente = prompt("Ingrese el nombre del paciente:");
+    const fecha = prompt("Ingrese la fecha de la cita (YYYY-MM-DD):");
+    const hora = prompt("Ingrese la hora de la cita (HH:MM):");
+    const medico = prompt("Ingrese el nombre del médico:");
 
-function realizarReserva() {
-    let nombre = prompt("Ingrese el nombre de quien reserva:");
-    let pais = prompt("Ingrese el país de origen:");
-    let numPersonas = parseInt(prompt("Ingrese el número de personas:"));
-    let periodoEstadia = parseInt(prompt("Ingrese el periodo de estadía (en días):"));
-    let mascota = confirm("¿Trae mascota? (OK para Sí, Cancelar para No)");
-    let fumadores = confirm("¿Son fumadores? (OK para Sí, Cancelar para No)");
-
-    let habitacionesDisponibles = habitaciones.filter(h => 
-        !h.reserva &&
-        h.capacidad >= numPersonas &&
-        (!fumadores || h.fumadores) && // Fumadores solo en habitaciones para fumadores
-        (!mascota || h.tipo_habitacion === "familiar") // Mascotas solo en habitaciones familiares
-    );
-
-    if (habitacionesDisponibles.length === 0) {
-        alert("Lo sentimos, no hay habitaciones disponibles que cumplan con sus requisitos.");
-        return;
-    }
-
-    let mensaje = "Habitaciones disponibles:\n";
-    habitacionesDisponibles.forEach((h, index) => {
-        mensaje += `${index + 1}. Habitación ${h.Numero_de_Habitacion}: ${h.tipo_habitacion}, capacidad ${h.capacidad}, ${h.fumadores ? 'fumadores' : 'no fumadores'}\n`;
-    });
-    mensaje += "Seleccione el número de la habitación que desea reservar:";
-
-    let seleccion = parseInt(prompt(mensaje)) - 1;
-    if (seleccion < 0 || seleccion >= habitacionesDisponibles.length) {
-        alert("Selección inválida.");
-        return;
-    }
-
-    let habitacionSeleccionada = habitacionesDisponibles[seleccion];
-    habitacionSeleccionada.reserva = true;
-
-    let nuevaReserva = {
-        nombre_quien_reserva: nombre,
-        pais_origen: pais,
-        numero_personas: numPersonas,
-        periodo_estadia: periodoEstadia,
-        numero_personas_hotel: calcularPersonasEnHotel() + numPersonas,
-        mascota: mascota,
-        fumadores: fumadores,
-        habitacion: habitacionSeleccionada.Numero_de_Habitacion
+    const nuevaCita = {
+        id: Date.now(), // Usamos timestamp como ID único
+        nombrePaciente,
+        fecha,
+        hora,
+        medico
     };
-    reservas.push(nuevaReserva);
-    alert(`Reserva realizada con éxito. Habitación asignada: ${habitacionSeleccionada.Numero_de_Habitacion}`);
+
+    citas.push(nuevaCita);
+    console.log("Cita programada exitosamente.");
 }
 
-function consultarReservas() {
-    let filtro = prompt("Ingrese el nombre, país o número de habitación para buscar reservas (deje en blanco para ver todas):");
-    let reservasFiltradas = reservas.filter(r => 
-        !filtro || 
-        r.nombre_quien_reserva.toLowerCase().includes(filtro.toLowerCase()) ||
-        r.pais_origen.toLowerCase().includes(filtro.toLowerCase()) ||
-        r.habitacion.toString() === filtro
-    );
-    
-    if (reservasFiltradas.length > 0) {
-        let mensaje = "Reservas encontradas:\n";
-        reservasFiltradas.forEach(r => {
-            mensaje += `Nombre: ${r.nombre_quien_reserva}, País: ${r.pais_origen}, Habitación: ${r.habitacion}, Personas: ${r.numero_personas}, Estadía: ${r.periodo_estadia} días, Mascota: ${r.mascota ? 'Sí' : 'No'}, Fumadores: ${r.fumadores ? 'Sí' : 'No'}\n`;
-        });
-        alert(mensaje);
+// Función para ver citas programadas
+function verCitasProgramadas() {
+    if (citas.length === 0) {
+        console.log("No hay citas programadas.");
+        return;
+    }
+
+    // Ordenar citas por fecha y hora
+    const citasOrdenadas = citas.sort((a, b) => {
+        const fechaA = new Date(a.fecha + 'T' + a.hora);
+        const fechaB = new Date(b.fecha + 'T' + b.hora);
+        return fechaA - fechaB;
+    });
+
+    console.log("Citas programadas:");
+    citasOrdenadas.forEach(cita => {
+        console.log(`ID: ${cita.id}, Paciente: ${cita.nombrePaciente}, Fecha: ${cita.fecha}, Hora: ${cita.hora}, Médico: ${cita.medico}`);
+    });
+}
+
+// Función para cancelar una cita
+function cancelarCita() {
+    const idCita = prompt("Ingrese el ID de la cita que desea cancelar:");
+    const index = citas.findIndex(cita => cita.id === parseInt(idCita));
+
+    if (index !== -1) {
+        citas.splice(index, 1);
+        console.log("Cita cancelada exitosamente.");
     } else {
-        alert("No se encontraron reservas con ese filtro.");
+        console.log("No se encontró una cita con ese ID.");
     }
 }
 
-function consultarHabitacionesDisponibles() {
-    let tipoFiltro = prompt("Filtrar por tipo (individual/doble/familiar), fumadores (si/no), o mascotas (si/no), o dejar en blanco para ver todas:");
-    let habitacionesDisponibles = habitaciones.filter(h => !h.reserva &&
-        (!tipoFiltro || 
-         h.tipo_habitacion.toLowerCase() === tipoFiltro.toLowerCase() ||
-         (tipoFiltro.toLowerCase() === 'si' && h.fumadores) ||
-         (tipoFiltro.toLowerCase() === 'no' && !h.fumadores) ||
-         (tipoFiltro.toLowerCase() === 'si' && h.tipo_habitacion === "familiar")) 
-    );
-    
-    document.write("<h2>Habitaciones Disponibles</h2>");
-    document.write("<table border='1'><tr><th>Número</th><th>Tipo</th><th>Capacidad</th><th>Fumadores</th><th>Permite Mascotas</th></tr>");
-    habitacionesDisponibles.forEach(h => {
-        document.write(`<tr><td>${h.Numero_de_Habitacion}</td><td>${h.tipo_habitacion}</td><td>${h.capacidad}</td><td>${h.fumadores ? 'Sí' : 'No'}</td><td>${h.tipo_habitacion === 'familiar' ? 'Sí' : 'No'}</td></tr>`);
-    });
-    document.write("</table>");
-    document.write("<br><button onclick='window.location.reload();'>Volver al Menú</button>");
-}
-
-function calcularPersonasEnHotel() {
-    return reservas.reduce((total, reserva) => total + reserva.numero_personas, 0);
-}
-
-function contarHabitacionesReservadas() {
-    return habitaciones.filter(h => h.reserva).length;
-}
-
-function menuPrincipal() {
-    let continuar = true;
-    while (continuar) {
-        let opcion = prompt(
-            "Menú Principal\n" +
-            "1. Realizar una reserva\n" +
-            "2. Consultar reservas\n" +
-            "3. Consultar habitaciones disponibles\n" +
-            "4. Ver estadísticas\n" +
-            "5. Salir"
+// Función principal para manejar la interacción del usuario
+function gestionarCitas() {
+    while (true) {
+        const opcion = prompt(
+            "Seleccione una opción:\n" +
+            "1. Programar cita\n" +
+            "2. Ver citas programadas\n" +
+            "3. Cancelar cita\n" +
+            "4. Salir"
         );
 
         switch (opcion) {
             case "1":
-                realizarReserva();
+                programarCita();
                 break;
             case "2":
-                consultarReservas();
+                verCitasProgramadas();
                 break;
             case "3":
-                consultarHabitacionesDisponibles();
-                continuar = false;
+                cancelarCita();
                 break;
             case "4":
-                alert(`Total de habitaciones reservadas: ${contarHabitacionesReservadas()}\n` +
-                      `Total de personas en el hotel: ${calcularPersonasEnHotel()}`);
-                break;
-            case "5":
-                continuar = false;
-                alert("Gracias por usar nuestro sistema de reservas.");
-                break;
+                console.log("Gracias por usar el sistema de gestión de citas médicas.");
+                return;
             default:
-                alert("Opción inválida. Por favor, intente de nuevo.");
+                console.log("Opción no válida. Por favor, intente de nuevo.");
         }
     }
 }
 
-alert("Bienvenido al hotel Bajo las estrellas");
-menuPrincipal();
+// Iniciar la aplicación
+gestionarCitas();
