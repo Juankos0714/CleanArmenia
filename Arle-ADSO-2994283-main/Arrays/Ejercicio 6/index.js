@@ -1,7 +1,4 @@
-// Array para almacenar las citas
 let citas = [];
-
-// Función para programar una cita
 function programarCita() {
     const nombrePaciente = prompt("Ingrese el nombre del paciente:");
     const fecha = prompt("Ingrese la fecha de la cita (YYYY-MM-DD):");
@@ -20,14 +17,12 @@ function programarCita() {
     console.log("Cita programada exitosamente.");
 }
 
-// Función para ver citas programadas
 function verCitasProgramadas() {
     if (citas.length === 0) {
         console.log("No hay citas programadas.");
         return;
     }
 
-    // Ordenar citas por fecha y hora
     const citasOrdenadas = citas.sort((a, b) => {
         const fechaA = new Date(a.fecha + 'T' + a.hora);
         const fechaB = new Date(b.fecha + 'T' + b.hora);
@@ -40,7 +35,6 @@ function verCitasProgramadas() {
     });
 }
 
-// Función para cancelar una cita
 function cancelarCita() {
     const idCita = prompt("Ingrese el ID de la cita que desea cancelar:");
     const index = citas.findIndex(cita => cita.id === parseInt(idCita));
@@ -53,7 +47,6 @@ function cancelarCita() {
     }
 }
 
-// Función principal para manejar la interacción del usuario
 function gestionarCitas() {
     while (true) {
         const opcion = prompt(
