@@ -1,14 +1,10 @@
-// Definición de productos
 const productos = [
     { id: 1, nombre: "Camiseta", precio: 20, stock: 50 },
     { id: 2, nombre: "Pantalón", precio: 40, stock: 30 },
     { id: 3, nombre: "Zapatos", precio: 60, stock: 20 },
   ];
   
-  // Carrito de compras
   let carrito = [];
-  
-  // Función para agregar producto al carrito
   function agregarAlCarrito(idProducto, cantidad) {
     const producto = productos.find(p => p.id === idProducto);
     if (producto && producto.stock >= cantidad) {
@@ -24,16 +20,14 @@ const productos = [
       console.log("Producto no disponible o stock insuficiente.");
     }
   }
-  
-  // Función para mostrar el carrito
+
   function mostrarCarrito() {
     console.log("Carrito de Compras:");
     carrito.forEach(item => {
       console.log(`${item.nombre} - Cantidad: ${item.cantidad} - Subtotal: $${item.precio * item.cantidad}`);
     });
   }
-  
-  // Función para calcular el total de la compra usando map y reduce
+
   function calcularTotal() {
     const total = carrito
       .map(item => item.precio * item.cantidad)
