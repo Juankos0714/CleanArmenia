@@ -1,0 +1,53 @@
+header {
+    position: relative;
+    top: 10px;
+    left: 20px;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; 
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    display: flex;
+    flex-direction: row; 
+    gap: 20px; 
+    line-height: 0.5
+  }
+  
+
+  
+
+article {
+    position: relative;
+    top: 10px;
+    left: 20px;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; 
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    display: flex;
+    flex-direction: column; 
+    gap: 20px; 
+    line-height: 1.5
+}
+article {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; 
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+nav {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; 
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+footer {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; 
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
