@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente OpenWeatherMap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        #api-info {
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+        #weather-form {
+            margin-bottom: 20px;
+        }
+        #weather-info {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Información del Clima</h1>
+    <div id="api-info">
+        <h2>Información de la API</h2>
+        <p>Este cliente utiliza la API pública de OpenWeatherMap.</p>
+        <p>Para más información, visita la <a href="https://openweathermap.org/api" target="_blank">documentación oficial</a>.</p>
+    </div>
+    <div id="weather-form">
+        <input type="text" id="city-input" placeholder="Ingrese una ciudad">
+        <button onclick="getWeather()">Obtener Clima</button>
+    </div>
+    <div id="weather-info"></div>
+
+    <script>
+        const API_KEY = "https://openweathermap.org/api"
+        const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
+
+        async function getWeather() {
+            const cityInput = document.getElementById('city-input');
+            const city = cityInput.value;
+
+            if (!city) {
+                alert('Por favor, ingrese una ciudad');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}?q=${city}&appid=${API_KEY}&units=metric&lang=es`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                displayWeather(data);
+            } catch (error) {
+                console.error('Error al obtener el clima:', error);
+                document.getElementById('weather-info').innerHTML = 'Error al obtener la información del clima. Por favor, intente de nuevo.';
+            }
+        }
+
+        function displayWeather(weatherData) {
+            const weatherInfo = document.getElementById('weather-info');
+            weatherInfo.innerHTML = `
+                <h2>Clima en ${weatherData.name}</h2>
+                <p>Temperatura: ${weatherData.main.temp}°C</p>
+                <p>Sensación térmica: ${weatherData.main.feels_like}°C</p>
+                <p>Humedad: ${weatherData.main.humidity}%</p>
+                <p>Descripción: ${weatherData.weather[0].description}</p>
+                <p>Viento: ${weatherData.wind.speed} m/s</p>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente de prueba de pago con Stripe</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        #payment-form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        #card-element {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #payment-result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prueba de Pago con Stripe</h1>
+    <div id="payment-form">
+        <div id="card-element">
+            <!-- Stripe.js insertará el elemento de tarjeta aquí -->
+        </div>
+        <button id="submit">Pagar</button>
+        <div id="payment-result"></div>
+    </div>
+
+    <script>
+        // Recuerda reemplazar esto con tu clave pública de prueba de Stripe
+        var stripe = Stripe('pk_test_TU_CLAVE_PUBLICA_AQUI');
+        var elements = stripe.elements();
+
+        var card = elements.create('card');
+        card.mount('#card-element');
+
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('payment-result');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // En un escenario real, enviarías el token a tu servidor aquí
+                    console.log('Token de prueba creado:', result.token);
+                    var successElement = document.getElementById('payment-result');
+                    successElement.textContent = '¡Pago de prueba exitoso! Token: ' + result.token.id;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
