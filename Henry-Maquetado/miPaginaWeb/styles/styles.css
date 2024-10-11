@@ -1,15 +1,88 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background: url(/Henry-Maquetado/miPaginaWeb/assets/images/yop.jpg)
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: url(../assets/images/books.jpg);
+  background-size: 100% auto;
+
 }
-header{
-  background-color: #81e9e0;
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-nav-logo{
-  background-color: aqua;
+
+header {
+  background-color: #3498db;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
 }
-a{
-  background-color: #81e9e0;
+
+h1 {
+  font-size: 2.5em;
 }
-.img{
-  height: 300px;
+
+nav {
+  background-color: #2980b9;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #1c638e;
+}
+
+section {
+  padding: 20px;
+}
+
+section p {
+  margin-bottom: 20px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+  background-color: #34495e;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  nav a {
+      margin: 5px 0;
+  }
 }
