@@ -1,13 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-h1{
-    color:indianred;
-    font-family: "Open Sans", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
-    font-style: normal;
-    font-variation-settings:
-      "wdth" 100;
+body {
+  background: url(/Henry-Maquetado/miPaginaWeb/assets/images/yop.jpg)
 }
-section{
-    
+header{
+  background-color: #81e9e0;
+}
+nav-logo{
+  background-color: aqua;
+}
+a{
+  background-color: #81e9e0;
+}
+.img{
+  height: 300px;
 }
